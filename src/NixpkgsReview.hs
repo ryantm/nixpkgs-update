@@ -41,7 +41,7 @@ run cache commit = let timeout = "45m" :: Text in do
       proc "rm" ["-rf", revDir cache commit]
   (exitCode, _nixpkgsReviewOutput) <-
     ourReadProcessInterleavedSem $
-      proc "timeout" [T.unpack timeout, (binPath <> "/nixpkgs-review"), "rev", T.unpack commit, "--no-shell"]
+      proc "timeout" [T.unpack timeout, (binPath <> "/nixpkgs-review"), "rev", T.unpack commit, "--no-shell", "--extra-nixpkgs-config", "{ allowInsecurePredicate = x: true; }"]
   case exitCode of
     ExitFailure 124 -> do
       output $ "[check][nixpkgs-review] took longer than " <> timeout <> " and timed out"
