@@ -221,4 +221,5 @@ python numPackageRebuilds derivationContents =
     (not isPython || numPackageRebuilds <= maxPackageRebuild)
   where
     isPython = "buildPythonPackage" `T.isInfixOf` derivationContents
-    maxPackageRebuild = 25
+    -- matches the number of rebuilds that would cause the PR to be created on staging and for nixpkgs-review to be skipped
+    maxPackageRebuild = 500
